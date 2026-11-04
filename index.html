@@ -2,12 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>commission-estimator</title>
+    <title>Commission Estimator</title>
   </head>
   <body>
-    <div id="app"></div>
+    <main class="app">
+      <header class="app-header">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <div>
+            <h1>Commission Estimator</h1>
+            <p>Describe the commission you want and get a price range.</p>
+          </div>
+        </div>
+      </header>
+
+      <div id="status" role="status"></div>
+
+      <section id="messages" class="messages" aria-live="polite">
+        <div class="bubble-app">
+          Hi! Tell me what you would like drawn: the style, how many characters, the background, and what it is for.
+        </div>
+      </section>
+
+      <form id="request-form" class="composer">
+        <label for="request" class="visually-hidden">Describe your commission</label>
+        <textarea id="request" rows="2" placeholder="e.g. full-body, anime style, 2 characters, detailed background"></textarea>
+        <button type="submit">Get estimate</button>
+      </form>
+    </main>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
