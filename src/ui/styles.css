@@ -41,10 +41,30 @@ body { margin: 0; background: var(--bg); color: var(--text); }
 .card h2 { margin: 0 0 4px; font-size: 1.6rem; color: var(--primary); }
 .card h3 { margin: 12px 0 8px; font-size: 0.95rem; font-weight: 600; color: var(--muted); }
 .card ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
-.card li { display: flex; justify-content: space-between; align-items: center; gap: 12px; text-transform: capitalize; }
+.card li { display: grid; grid-template-columns: 6.5rem 1fr auto; align-items: center; gap: 8px 10px; }
+.card li select { width: 100%; min-width: 0; }
+.card .factor { font-weight: 600; }
+.card .score { font-size: 0.8rem; color: var(--muted); white-space: nowrap; }
 .card p { margin: 12px 0 0; }
 .card p select { display: block; margin-top: 8px; }
-.card p:last-child { font-size: 0.85rem; color: var(--muted); }
+.card .assumed-note { display: block; margin-top: 6px; color: var(--muted); }
+.card .note { font-size: 0.85rem; color: var(--muted); }
+
+/* Price breakdown */
+.breakdown { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 10px; }
+.breakdown summary { cursor: pointer; font-weight: 600; color: var(--primary); min-height: 32px; display: flex; align-items: center; }
+.breakdown ol { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+.breakdown li { display: flex; justify-content: space-between; gap: 12px; font-size: 0.9rem; grid-template-columns: none; }
+.breakdown li span:first-child::first-letter { text-transform: uppercase; }
+.breakdown .amount { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.breakdown .range { border-top: 1px dashed var(--border); padding-top: 6px; font-weight: 600; }
+.breakdown .assumed { color: var(--muted); font-size: 0.8rem; }
+.breakdown .hint { font-size: 0.85rem; color: var(--muted); }
+
+@media (max-width: 360px) {
+  .card li { grid-template-columns: 1fr auto; }
+  .card li select { grid-column: 1 / -1; grid-row: 2; }
+}
 
 /* Controls */
 select { font: inherit; font-size: 16px; min-height: 40px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); color: var(--text); text-transform: none; }

@@ -3,8 +3,9 @@
 // Do not import this directly. Use classifier.js.
 
 import { pipeline } from '@huggingface/transformers';
-import { FACTORS, MODEL_ID } from './labels.js';
+import { MODEL_ID } from './labels.js';
 import { normalize } from './normalize.js';
+import { classifyFactors } from './zeroShot.js';
 
 let modelPromise = null;
 
@@ -25,30 +26,7 @@ async function classify(text) {
   const started = performance.now();
   const model = await loadModel();
   const normalizedText = normalize(text);
-
-  const factors = {};
-  // One pass per factor, in order. WASM runs on one thread anyway.
-  for (const [factor, config] of Object.entries(FACTORS)) {
-    const output = await model(normalizedText, config.labels.map((l) => l.phrase), {
-      hypothesis_template: config.template,
-      multi_label: false, // scores across one factor's labels add up to 1
-    });
-
-    const idByPhrase = Object.fromEntries(config.labels.map((l) => [l.phrase, l.id]));
-    const scores = {};
-    output.labels.forEach((phrase, i) => {
-      scores[idByPhrase[phrase]] = Number(output.scores[i].toFixed(3));
-    });
-
-    const score = Number(output.scores[0].toFixed(3));
-    factors[factor] = {
-      label: idByPhrase[output.labels[0]],
-      score,
-      confident: score >= config.threshold,
-      scores,
-    };
-  }
-
+  const factors = await classifyFactors(model, normalizedText);
   return { text, normalizedText, model: MODEL_ID, elapsedMs: Math.round(performance.now() - started), factors };
 }
 

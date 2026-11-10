@@ -6,9 +6,15 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:pricing": "node src/pricing/_test.js",
+    "compare:quotes": "node src/pricing/compareQuotes.js",
+    "eval:ai": "node src/ai/evalClassifier.js"
   },
   "devDependencies": {
     "vite": "^8.3.5"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^4.3.2"
   }
 }

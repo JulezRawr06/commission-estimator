@@ -16,17 +16,19 @@ const GLOSSARY = [
   [/\b(dalawang|2) (tao|karakter|character|oc)s?\b/gi, 'two characters'],
   [/\b(tatlong|apat na|limang|maraming|3|4|5) (tao|karakter|character|oc)s?\b/gi, 'three or more characters'],
   [/\b(isang|1) (tao|karakter|character|oc)\b|\bsolo\b/gi, 'one character'],
-  [/\bmagkapatid|mag-?jowa|mag-?bestfriend|mag-?kaibigan|couple\b/gi, 'two characters'],
+  [/\b(magkapatid|mag-?jowa|mag-?bestfriend|mag-?kaibigan|couple)\b/gi, 'two characters'],
+  // "me and my boyfriend", "ako at ang kapatid ko": the client plus one other person
+  [/\b(me and my|ako at ang|ako at si) \w+/gi, 'two characters'],
 
-  // background
+  // background (longer phrases first, so "may detalyadong background" is replaced
+  // once, not turned into "detailed background background")
   [/walang background|walang backdrop|no background/gi, 'no background'],
   [/simpleng background|simple lang ang background|plain background|blangko/gi, 'simple background'],
-  [/detalyadong background|may detalyadong|maraming detalye sa background|buong eksena/gi, 'detailed background'],
+  [/(may )?detalyadong background|maraming detalye sa background|buong eksena|may detalyadong/gi, 'detailed background'],
 
   // usage
   [/pang-?negosyo|para sa negosyo|para sa business|pang-?business|pang-?merch|pang-?logo|para sa shop|pang-?benta/gi, 'commercial use'],
   [/pang-?personal|para sa sarili|pang-?pfp|pang-?profile pic|pang-?regalo|regalo/gi, 'personal use'],
-
   // style
   [/makatotohanan|parang totoo/gi, 'realistic'],
   [/pixel(?!\s*art)/gi, 'pixel art'],

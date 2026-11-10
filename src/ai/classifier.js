@@ -80,7 +80,13 @@ export async function classify(text, onProgress) {
 }
 
 // Combine per-file download events into one overall percentage (0 to 100).
+// Transformers.js 4 also sends `progress_total`, weighted by bytes; prefer it,
+// because averaging per-file percentages jumps to ~75% as soon as the small
+// config files finish, while the large model file is still downloading.
+let totalPercent = null;
 export function downloadPercent(event) {
+  if (event?.status === 'progress_total') totalPercent = event.progress ?? 0;
+  if (totalPercent != null) return Math.min(100, Math.round(totalPercent));
   if (event?.status === 'progress' && event.file) {
     fileProgress[event.file] = event.progress ?? 0;
   }
